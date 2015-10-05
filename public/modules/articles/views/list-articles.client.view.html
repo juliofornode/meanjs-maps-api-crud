@@ -1,0 +1,44 @@
+<section data-ng-controller="ArticlesController" data-ng-init="find()">
+	<div class="page-header">
+		<h1>Events</h1>
+	</div>
+	<div class="list-group">
+		
+		<!-- map -->
+		
+		<map center="[30,0]" zoom="2">
+
+  			<marker ng-repeat='article in articles' position='[{{article.lat}},{{article.lon}}]' visible="true" on-click="gotolink(event,article)">
+  		</marker>
+		
+		</map>
+
+		<br/>
+
+		<div class="col-lg-6">
+			<div class="input-group">
+				<input type="search" class="form-control" style="position: relative; right: 16px; top: 5px;" ng-model="search" placeholder="Search for..." >
+			</div><!-- /input-group -->
+		</div><!-- /.col-lg-6 -->
+
+		<br/>
+		<br/>
+		<br/>
+
+
+		<a data-ng-repeat="article in articles | filter:search"  data-ng-href="#!/articles/{{article._id}}" class="list-group-item">
+
+			<h4 class="list-group-item-heading" data-ng-bind="article.title"></h4>
+
+			<p class="list-group-item-text" data-ng-bind="article.content"></p>
+			<p class="list-group-item-text" data-ng-bind="article.lat"></p>
+			<p class="list-group-item-text" data-ng-bind="article.lon"></p>
+		</a>
+
+	</div>
+
+	<!-- if theres no articles length. -->
+	<div class="alert alert-warning text-center" data-ng-if="articles.$resolved && !articles.length">
+		No articles yet, why don't you <a href="/#!/articles/create">create one</a>?
+	</div>
+</section>
